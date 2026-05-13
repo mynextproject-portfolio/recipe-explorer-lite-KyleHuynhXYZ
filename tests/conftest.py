@@ -1,10 +1,14 @@
 """
 Test fixtures for Recipe Explorer tests.
 """
+import warnings
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 from app.services.storage import recipe_storage
+
+# Suppress ALL deprecation warnings globally
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 @pytest.fixture
@@ -27,8 +31,9 @@ def sample_recipe_data():
     return {
         "title": "Test Recipe",
         "description": "A test recipe",
+        "servings": 2,
         "ingredients": ["ingredient 1", "ingredient 2"],
-        "instructions": "First, do step 1.\n\nThen, do step 2.",
+        "instructions": ["First, do step 1.", "Then, do step 2."],
         "tags": ["test"],
         "difficulty": "Easy"
     }

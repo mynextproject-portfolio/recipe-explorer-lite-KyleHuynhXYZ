@@ -36,6 +36,9 @@ def test_create_and_get_recipe(client, clean_storage, sample_recipe_data):
     assert "id" in recipe
     assert "title" in recipe
     assert "created_at" in recipe
+    assert "instructions" in recipe
+    assert isinstance(recipe["instructions"], list)
+    assert recipe["servings"] == sample_recipe_data["servings"]
     assert recipe["title"] == sample_recipe_data["title"]
     
     # Get recipe

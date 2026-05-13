@@ -17,8 +17,9 @@ class Recipe(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str 
     description: str
+    servings: Optional[int] = None
     ingredients: List[str]
-    instructions: str
+    instructions: List[str]
     tags: List[str] = Field(default_factory=list)
     difficulty: DifficultyLevel
     created_at: datetime = Field(default_factory=datetime.now)
@@ -28,8 +29,9 @@ class Recipe(BaseModel):
 class RecipeCreate(BaseModel):
     title: str
     description: str
+    servings: Optional[int] = None
     ingredients: List[str]
-    instructions: str
+    instructions: List[str]
     tags: List[str] = Field(default_factory=list)
     difficulty: DifficultyLevel
 
@@ -37,7 +39,8 @@ class RecipeCreate(BaseModel):
 class RecipeUpdate(BaseModel):
     title: str
     description: str
+    servings: Optional[int] = None
     ingredients: List[str]
-    instructions: str
+    instructions: List[str]
     tags: List[str]
     difficulty: DifficultyLevel

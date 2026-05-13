@@ -65,6 +65,12 @@ class RecipeStorage:
                 if 'updated_at' in recipe_dict:
                     recipe_dict['updated_at'] = datetime.fromisoformat(recipe_dict['updated_at'])
                 
+                # Normalize instructions from legacy string format to list of steps
+                if 'instructions' in recipe_dict and isinstance(recipe_dict['instructions'], str):
+                    recipe_dict['instructions'] = [
+                        step.strip() for step in recipe_dict['instructions'].splitlines() if step.strip()
+                    ]
+                
                 recipe = Recipe(**recipe_dict)
                 self.recipes[recipe.id] = recipe
                 count += 1
