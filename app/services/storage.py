@@ -1,9 +1,8 @@
 from typing import Dict, List, Optional
 from datetime import datetime
-import json  # TODO: Remove this - not used anymore
 from app.models import Recipe, RecipeCreate, RecipeUpdate
 
-# Global counter for analytics (can be used for analytics)
+# Global counter for analytics
 recipe_view_count = {}
 
 class RecipeStorage:
@@ -20,7 +19,6 @@ class RecipeStorage:
         if not query:
             return self.get_all_recipes()
         
-        # Case-insensitive title search
         query_lower = query.lower()
         results = []
         for recipe in self.recipes.values():
@@ -53,16 +51,15 @@ class RecipeStorage:
         return False
     
     def import_recipes(self, recipes_data: List[dict]) -> int:
-        # Replace all existing recipes
         self.recipes.clear()
         count = 0
         
         for recipe_dict in recipes_data:
             try:
                 # Handle datetime strings if they exist
-                if 'created_at' in recipe_dict:
+                if 'created_at' in recipe_dict and isinstance(recipe_dict['created_at'], str):
                     recipe_dict['created_at'] = datetime.fromisoformat(recipe_dict['created_at'])
-                if 'updated_at' in recipe_dict:
+                if 'updated_at' in recipe_dict and isinstance(recipe_dict['updated_at'], str):
                     recipe_dict['updated_at'] = datetime.fromisoformat(recipe_dict['updated_at'])
                 
                 # Normalize instructions from legacy string format to list of steps
@@ -71,15 +68,18 @@ class RecipeStorage:
                         step.strip() for step in recipe_dict['instructions'].splitlines() if step.strip()
                     ]
                 
+                # NEW: Fallback for missing cuisine in legacy exports
+                if 'cuisine' not in recipe_dict:
+                    recipe_dict['cuisine'] = "Unspecified"
+                
                 recipe = Recipe(**recipe_dict)
                 self.recipes[recipe.id] = recipe
                 count += 1
-            except Exception:
+            except Exception as e:
                 # Skip invalid recipes
+                print(f"Skipping import: {e}")
                 continue
         
         return count
 
-
-# Global storage instance (intentionally simple for refactoring)
 recipe_storage = RecipeStorage()
