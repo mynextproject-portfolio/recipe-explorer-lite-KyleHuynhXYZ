@@ -32,8 +32,10 @@ def sample_recipe_data():
         "title": "Test Recipe",
         "description": "A test recipe",
         "servings": 2,
+        "cuisine": "American",
         "ingredients": ["ingredient 1", "ingredient 2"],
         "instructions": ["First, do step 1.", "Then, do step 2."],
         "tags": ["test"],
         "difficulty": "Easy"
+        
     }
