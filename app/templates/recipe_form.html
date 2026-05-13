@@ -93,7 +93,7 @@
             <div class="mb-4">
                 <label for="instructions" class="form-label">Instructions</label>
                 <textarea class="form-control" id="instructions" name="instructions" rows="8" required 
-                          placeholder="Enter complete cooking instructions...">{% if recipe %}{{ recipe.instructions }}{% endif %}</textarea>
+                          placeholder="Enter complete cooking instructions...">{% if recipe %}{{ recipe.instructions|join('\n') }}{% endif %}</textarea>
             </div>
             
             <!-- Submit Buttons -->
