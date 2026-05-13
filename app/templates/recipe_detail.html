@@ -51,7 +51,11 @@
             <h3>Instructions</h3>
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text" style="white-space: pre-line;">{{ recipe.instructions }}</p>
+                    <ol class="mb-0">
+                        {% for step in recipe.instructions %}
+                        <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
                 </div>
             </div>
         </div>
@@ -81,6 +85,7 @@
                 <small class="text-muted">
                     <div><strong>Created:</strong> {{ recipe.created_at.strftime('%B %d, %Y') }}</div>
                     <div><strong>Updated:</strong> {{ recipe.updated_at.strftime('%B %d, %Y') }}</div>
+                    <div><strong>Servings:</strong> {{ recipe.servings or 'N/A' }}</div>
                     <div><strong>Ingredients:</strong> {{ recipe.ingredients|length }}</div>
                     <div><strong>Difficulty:</strong> {{ recipe.difficulty }}</div>
                 </small>

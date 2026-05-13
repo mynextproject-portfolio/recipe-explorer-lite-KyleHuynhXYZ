@@ -43,6 +43,13 @@
                     <option value="Hard" {% if recipe and recipe.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
                 </select>
             </div>
+
+            <div class="mb-3">
+                <label for="servings" class="form-label">Servings</label>
+                <input type="number" class="form-control" id="servings" name="servings" min="1"
+                       value="{% if recipe and recipe.servings %}{{ recipe.servings }}{% endif %}"
+                       placeholder="Number of servings">
+            </div>
             
             <div class="mb-3">
                 <label for="tags" class="form-label">Tags (comma-separated)</label>
@@ -86,7 +93,7 @@
             <div class="mb-4">
                 <label for="instructions" class="form-label">Instructions</label>
                 <textarea class="form-control" id="instructions" name="instructions" rows="8" required 
-                          placeholder="Enter complete cooking instructions...">{% if recipe %}{{ recipe.instructions }}{% endif %}</textarea>
+                          placeholder="Enter complete cooking instructions...">{% if recipe %}{{ recipe.instructions|join('\n') }}{% endif %}</textarea>
             </div>
             
             <!-- Submit Buttons -->
