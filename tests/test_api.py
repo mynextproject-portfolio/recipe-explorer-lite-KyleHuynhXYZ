@@ -3,21 +3,6 @@ Basic smoke and contract tests for Recipe Explorer API.
 These tests verify that endpoints exist and return expected status codes.
 """
 
-import pytest
-
-@pytest.fixture
-def sample_recipe_data():
-    return {
-        "title": "Test Recipe",
-        "description": "A test recipe",
-        "difficulty": "Easy",
-        "cuisine": "American",
-        "servings": 4,                                 # <--- ADD THIS LINE
-        "ingredients": ["ingredient 1", "ingredient 2"],
-        "instructions": ["First, do step 1.", "Then, do step 2."],
-        "tags": ["test"]
-    }
-
 def test_health_check(client):
     """Smoke test: API is running and responding"""
     response = client.get("/health")
